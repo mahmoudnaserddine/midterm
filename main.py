@@ -1,5 +1,5 @@
 def system():
-    print("Welcome to our sytem:)")
+    print("Welcome to our system:)")
     correct_username = "admin"
     correct_password = "admin123123"
     max_attempts = 5
@@ -27,6 +27,8 @@ def system():
                     display_users()
                 elif inputed_number == 2:
                     add_employee()
+                # elif inputed_number ==4:
+                #     change_salary()
             break
 
 
@@ -39,10 +41,12 @@ def system():
             # Check if the inputed_username exists in data.txt
             with open('data.txt') as f:
                 for line in f:
-                    username = line.split(', ')[1]  # Assuming the username is the second item in the line
-                    if inputed_username == username:
-                        found = True
-                        break
+                    items = line.strip().split(', ')
+                    if len(items) >= 2:  # Make sure there are at least two elements
+                        username = items[1]  # Assuming the username is the second item in the line
+                        if inputed_username == username:
+                            found = True
+                            break
 
             if found:
                 if inputed_password == "":
@@ -84,19 +88,30 @@ def display_gender():
 
 #-----------------------------------------------------
 
+import datetime
 def add_employee():
     file = "data.txt"
-    data = input("Enter employee data in this order (empID, name, date, gender, salary): ")
+    empID = input("Enter employee ID: ")
+    name = input("Enter employee name: ")
+    gender = input("Enter employee gender: ")
+    salary = input("Enter employee salary: ")
+    current_date = datetime.datetime.now().strftime("%Y%m%d")
+    employee_data = f"{empID}, {name}, {current_date}, {gender}, {salary}"
 
-    fields = data.split(', ') #https://www.w3schools.com/python/ref_string_split.asp#:~:text=The%20split()%20method%20splits,number%20of%20elements%20plus%20one.
-    if len(fields)==5:
-        with open(file, "a") as file:
-            file.write( data + "\n")  # https://www.pythontutorial.net/python-basics/python-write-text-file/#:~:text=Steps%20for%20writing%20to%20text,using%20the%20close()%20method.
-            print("Data added Successfully!!")
-            print("\n")
-    else:
-        print("wrong Data!!")
-        print("\n")
+    with open(file, "a") as file:  # https://www.pythontutorial.net/python-basics/python-write-text-file/#:~:text=Steps%20for%20writing%20to%20text,using%20the%20close()%20method
+        if gender.lower() not in ["male", "female"]:
+            print("wrong gender")
+
+        else:
+            file.write(employee_data + "\n")
+            print("Data added successfully!\n")
+
+
+
+
+
+
+
 
 
 
@@ -120,7 +135,7 @@ def display_users():
 
 #----------------------------------------------------
 
-
+# def change_salary()
 
 
 
