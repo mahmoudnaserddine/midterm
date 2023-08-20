@@ -88,33 +88,36 @@ def display_gender():
 
 #-----------------------------------------------------
 
+
 import datetime
+
 def add_employee():
     file = "data.txt"
-    empID = input("Enter employee ID: ")
+
     name = input("Enter employee name: ")
     gender = input("Enter employee gender: ")
-    salary = input("Enter employee salary: ")
+
+    while True:
+        try:
+            salary = int(input("Enter employee salary: "))
+            break
+        except ValueError:
+            print("Invalid salary!")
+
+    with open(file, "r") as file_read:
+        count = sum(1 for _ in file_read)
+
+    empID = f"emp00{count}"
+
     current_date = datetime.datetime.now().strftime("%Y%m%d")
     employee_data = f"{empID}, {name}, {current_date}, {gender}, {salary}"
 
-    with open(file, "a") as file:  # https://www.pythontutorial.net/python-basics/python-write-text-file/#:~:text=Steps%20for%20writing%20to%20text,using%20the%20close()%20method
-        if gender.lower() not in ["male", "female"]:
-            print("wrong gender")
-
-        else:
-            file.write(employee_data + "\n")
+    if gender.lower() not in ["male", "female"]:
+        print("Wrong gender")
+    else:
+        with open(file, "a") as file_append:
+            file_append.write(employee_data + "\n")
             print("Data added successfully!\n")
-
-
-
-
-
-
-
-
-
-
 
 
 #----------------------------------------------------
