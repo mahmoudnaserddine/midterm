@@ -27,8 +27,15 @@ def system():
                     display_users()
                 elif inputed_number == 2:
                     add_employee()
-                # elif inputed_number ==4:
-                #     change_salary()
+                elif inputed_number ==4:
+                    change_salary()
+                elif inputed_number == 5:
+                    remove_employee()
+                elif inputed_number == 6:
+                    raise_salary()
+                elif inputed_number == 7:
+                    exit_system()
+
             break
 
 
@@ -107,7 +114,7 @@ def add_employee():
     with open(file, "r") as file_read:
         count = sum(1 for _ in file_read)
 
-    empID = f"emp00{count}"
+    empID = f"emp00{count+1}"  # Incrementing the count by 1
 
     current_date = datetime.datetime.now().strftime("%Y%m%d")
     employee_data = f"{empID}, {name}, {current_date}, {gender}, {salary}"
@@ -138,7 +145,123 @@ def display_users():
 
 #----------------------------------------------------
 
-# def change_salary()
+def change_salary():
+    #https://stackoverflow.com/questions/17140886/how-to-search-and-replace-text-in-a-file
+
+
+    with open('data.txt', 'r') as file:
+        filedata = file.read()
+
+
+    emp_id_to_change = input("Enter the employee ID whose salary you want to change: ")
+    new_salary = input("Enter the new salary: ")
+
+
+    updated_lines = []
+
+    # Iterate through each line in the file
+    with open('data.txt', 'r') as file_read:
+        for line in file_read:
+            # Check if the line starts with the specified employee ID
+            if line.startswith(emp_id_to_change): #https://www.programiz.com/python-programming/methods/string/startswith
+                line = line.rsplit(', ', 1)[0] + f", {new_salary}\n"
+            updated_lines.append(line)
+
+
+    with open('data.txt', 'w') as file_write:
+        file_write.writelines(updated_lines)
+
+
+    # Check if any line starts with the specified employee ID in the updated lines
+    if any(line.startswith(emp_id_to_change) for line in updated_lines):
+        print(f"Salary for employee '{emp_id_to_change}' changed successfully.")
+    else:
+        print(f"Employee with ID '{emp_id_to_change}' not found.")
+
+#-------------------------------------------------------------------------------
+
+
+def remove_employee():
+    # https://www.geeksforgeeks.org/how-to-delete-data-from-file-in-python/
+
+    emp_remove = input("Enter the ID of the employee you want to remove: ")
+
+    # Open the file in read mode
+    with open("data.txt", "r") as f:
+        # Read data line by line
+        data = f.readlines()
+
+    found = False  # Flag to track if the employee ID was found
+
+    # Open the file in write mode
+    with open("data.txt", "w") as f:
+        for line in data:
+            # Extract employee ID from the line
+            emp_id = line.split(",")[0].strip()
+
+            # Condition for data to be deleted based on employee ID
+            if emp_id != emp_remove:
+                f.write(line)
+            else:
+                found = True  # Employee ID was found
+
+    if found:
+        print("Employee has been removed!")
+    else:
+        print("Wrong employee ID")
+
+
+#-------------------------------------------------------------------
+
+def raise_salary():
+    file_path = 'data.txt'
+    emp_raise = input("Enter the employee ID whose salary you want to raise: ")
+
+    while True:
+        try:
+            new_percentage = float(input("Enter the percentage to raise the salary by (between 0 and 100): "))
+            if 0 <= new_percentage <= 100:
+                break
+            else:
+                print("Percentage should be between 0 and 100.")
+        except ValueError:
+            print("Invalid percentage input.")
+
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    updated_lines = []
+
+    for line in lines:
+        if line.startswith(emp_raise):
+            parts = line.strip().rsplit(', ', 2)
+            emp_id, emp_data, salary = parts
+            try:
+                current_salary = int(salary)
+                new_salary = current_salary * (1 + new_percentage / 100)
+                updated_line = f"{emp_id}, {emp_data}, {int(new_salary)}\n"
+                updated_lines.append(updated_line)
+                print(f"Salary for employee '{emp_raise}' changed successfully.")
+            except ValueError:
+                print("Invalid salary value in data file.")
+                return
+        else:
+            updated_lines.append(line)
+
+    with open(file_path, 'w') as file_write:
+        file_write.writelines(updated_lines)
+
+    if not any(line.startswith(emp_raise) for line in updated_lines):
+        print(f"Employee with ID '{emp_raise}' not found.")
+
+#--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 
 
