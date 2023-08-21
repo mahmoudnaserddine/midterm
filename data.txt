@@ -1,5 +1,3 @@
-emp001, cdaoud, 20220802, male, 9999
-emp002, manuella, 20220803, female, 1200
-emp003, asdas, 20230821, male, 13123
-emp004, asdasdasd, 20230821, female, 12313
-emp005, mohammad, 20230821, male, 100
+emp001, cdaoud, 20230821, male, 560
+emp002, manuella, 20230821, female, 1200
+emp003, mahmoud, 20230821, male, 2423

@@ -27,7 +27,7 @@ def system():
                     display_users()
                 elif inputed_number == 2:
                     add_employee()
-                elif inputed_number ==4:
+                elif inputed_number == 4:
                     change_salary()
                 elif inputed_number == 5:
                     remove_employee()
@@ -39,13 +39,7 @@ def system():
                 else:
                     print("Invalid choice. Please enter a valid number")
 
-
             break
-
-
-
-
-
         else:
             found = False
 
@@ -57,12 +51,23 @@ def system():
                         username = items[1]  # Assuming the username is the second item in the line
                         if inputed_username == username:
                             found = True
+                            user_name = items[1]  # Extract the user's name
+                            user_gender = items[3]  # Extract the user's gender
                             break
 
             if found:
                 if inputed_password == "":
-                    print("Welcome user")
-                    break
+                    gender_title = "Mr." if user_gender.lower() == "male" else "Mrs."
+                    print(f"Welcome {gender_title} {user_name}")
+                    while True:
+                        print("1. to Check My Salary")
+                        print("2. to exit")
+                        inputed_number = int(input(" "))
+                        if inputed_number == 1:
+                            display_user_salary(inputed_username)
+                        elif inputed_number == 2:
+                            exit_user(inputed_username)  # Update the exit date for the logged-in user
+                            break
                 else:
                     print("Invalid password")
             else:
@@ -120,7 +125,7 @@ def add_employee():
 
     empID = f"emp00{count+1}"  # Incrementing the count by 1
 
-    current_date = datetime.datetime.now().strftime("%Y%m%d")
+    current_date = datetime.now().strftime("%Y%m%d")
     employee_data = f"{empID}, {name}, {current_date}, {gender}, {salary}"
 
     if gender.lower() not in ["male", "female"]:
@@ -263,18 +268,51 @@ def raise_salary():
 
 def exit_system():
     print("Exiting the system. Goodbye!")
-    exit()  # Exit the program
+    exit()
 
 
+    #https://www.freecodecamp.org/news/python-exit-how-to-use-an-exit-function-in-python-to-stop-a-program/#:~:text=The%20exit()%20function%20in,immediately%20stop%20running%20and%20exit.
+    # Exit the program
 
 
+#----------------------------------------------------------------------------------------
+from datetime import datetime
 
+def exit_user(logged_in_username):
+    current_date = datetime.now().strftime("%Y%m%d")
 
+    with open("data.txt", "r") as file:
+        lines = file.readlines()
 
+    updated_lines = []
+    for line in lines:
+        data = line.strip().split(", ")
+        emp_username = data[1]  # Assuming the username is the second item in the line
+        if logged_in_username == emp_username:
+            data[2] = current_date
+        line = ", ".join(data) + "\n"
+        updated_lines.append(line)
 
+    with open("data.txt", "w") as file:
+        file.writelines(updated_lines)
+        exit_system()
 
+#-----------------------------------------------------------------------------------------
+def display_user_salary(logged_in_username):
+    with open("data.txt", "r") as f:
+        lines = f.readlines()
 
+    found = False
+    for line in lines:
+        emp_id, emp_name, emp_date, emp_gender, emp_salary_value = line.strip().split(", ")
+        emp_username = emp_name.lower().replace(" ", "_")
+        if logged_in_username == emp_username:
+            print(f"Your salary: {emp_salary_value}")
+            found = True
+            break
 
+    if not found:
+        print("User not found or not authorized to check salary.")
 
 
 system()
