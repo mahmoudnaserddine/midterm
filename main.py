@@ -36,6 +36,10 @@ def system():
                 elif inputed_number == 7:
                     exit_system()
 
+                else:
+                    print("Invalid choice. Please enter a valid number")
+
+
             break
 
 
@@ -255,6 +259,11 @@ def raise_salary():
         print(f"Employee with ID '{emp_raise}' not found.")
 
 #--------------------------------------------------------------------------------------
+
+
+def exit_system():
+    print("Exiting the system. Goodbye!")
+    exit()  # Exit the program
 
 
 
