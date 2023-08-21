@@ -1,4 +1,13 @@
+
+
 def system():
+    # Big O notaion : O(n) where n is the number of lines in the file
+    #The overall complexity of the system() function depends on the number
+    # of lines in the data file. The function reads the file to validate users
+    # and perform actions based on user input. The loop that reads the file and checks
+    # the username complexity grows linearly with the number of lines in the file.
+
+
     print("Welcome to our system:)")
     correct_username = "admin"
     correct_password = "admin123123"
@@ -51,8 +60,8 @@ def system():
                         username = items[1]  # Assuming the username is the second item in the line
                         if inputed_username == username:
                             found = True
-                            user_name = items[1]  # Extract the user's name
-                            user_gender = items[3]  # Extract the user's gender
+                            user_name = items[1]
+                            user_gender = items[3]
                             break
 
             if found:
@@ -81,6 +90,7 @@ def system():
 
 
 #-------------------------------------------------------------------------
+#Big O notation: O(n), where n is the number of lines in the function.
 def display_gender():
     # https://stackoverflow.com/questions/4803999/how-to-convert-a-file-into-a-dictionary
         male_count = 0
@@ -106,13 +116,12 @@ def display_gender():
 
 
 import datetime
-
+#Big O notation: O(n), where n is the number of lines in the function.
 def add_employee():
     file = "data.txt"
 
     name = input("Enter employee name: ")
     gender = input("Enter employee gender: ")
-
     while True:
         try:
             salary = int(input("Enter employee salary: "))
@@ -137,6 +146,7 @@ def add_employee():
 
 
 #----------------------------------------------------
+#Big O notation: O(n), where n is the number of lines in the function.
 def display_users():
     # https://stackoverflow.com/questions/4803999/how-to-convert-a-file-into-a-dictionary
     data_dict = {}
@@ -155,6 +165,7 @@ def display_users():
 #----------------------------------------------------
 
 def change_salary():
+    # Big O notation: O(n), where n is the number of lines in the function.
     #https://stackoverflow.com/questions/17140886/how-to-search-and-replace-text-in-a-file
 
 
@@ -191,6 +202,7 @@ def change_salary():
 
 
 def remove_employee():
+    # Big O notation: O(n), where n is the number of lines in the function.
     # https://www.geeksforgeeks.org/how-to-delete-data-from-file-in-python/
 
     emp_remove = input("Enter the ID of the employee you want to remove: ")
@@ -223,6 +235,7 @@ def remove_employee():
 #-------------------------------------------------------------------
 
 def raise_salary():
+    # Big O notation: O(n), where n is the number of lines in the function.
     file_path = 'data.txt'
     emp_raise = input("Enter the employee ID whose salary you want to raise: ")
 
@@ -267,6 +280,9 @@ def raise_salary():
 
 
 def exit_system():
+ # Big O notation: O(1), print("Exiting the system. Goodbye!") and exit(). Since both of these operations have a fixed
+ # and constant execution time, the overall complexity of the exit_system() function is constant, and it is denoted as O(1).
+ # Regardless of the number of elements in the system or any other factors, the time it takes for this function to execute remains constant.
     print("Exiting the system. Goodbye!")
     exit()
 
@@ -279,6 +295,7 @@ def exit_system():
 from datetime import datetime
 
 def exit_user(logged_in_username):
+    # Big O notation: O(n), where n is the number of lines in the function.
     current_date = datetime.now().strftime("%Y%m%d")
 
     with open("data.txt", "r") as file:
@@ -299,6 +316,7 @@ def exit_user(logged_in_username):
 
 #-----------------------------------------------------------------------------------------
 def display_user_salary(logged_in_username):
+    # Big O notation: O(n), where n is the number of lines in the function.
     with open("data.txt", "r") as f:
         lines = f.readlines()
 
